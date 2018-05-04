@@ -16,6 +16,13 @@ if [ $# -lt 1 ] || !(type jq &> /dev/null) || !(type youtube-dl &> /dev/null); t
   usage
   exit
 fi
+
+if [ $1 = "init" ]; then
+  mkdir -p $CONFIG_DIR/playlist &&
+  echo '{"list":[],"name":"default"}' > $CONFIG_DIR/playlist/default.json
+  exit
+fi
+
 if [[ $1 = "add" ]]; then
   if [[ "$2" = "" ]] || [[ "$3" = "" ]]; then
     usage
