@@ -11,7 +11,7 @@ usage(){
   echo "Require"
   echo -e "\tyoutube-dl"
   echo -e "\tjq"
-  exit
+  exit 1
 }
 
 if [ "$1" = "--help" ] || [ $# -lt 1 ] || !(type jq &> /dev/null) || !(type youtube-dl &> /dev/null); then
