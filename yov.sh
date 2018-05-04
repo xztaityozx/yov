@@ -11,11 +11,11 @@ usage(){
   echo "Require"
   echo -e "\tyoutube-dl"
   echo -e "\tjq"
+  exit
 }
 
-if [ $# -lt 1 ] || !(type jq &> /dev/null) || !(type youtube-dl &> /dev/null); then
+if [ "$1" = "--help" ] || [ $# -lt 1 ] || !(type jq &> /dev/null) || !(type youtube-dl &> /dev/null); then
   usage
-  exit
 fi
 
 addplaylist(){
@@ -36,7 +36,6 @@ fi
 if [[ $1 = "addlocal" ]]; then
   if [ "$4" = "" ] || [ "$2" = "" ] || [ "$3" = "" ]; then
     usage
-    exit
   fi
   addplaylist $CONFIG_DIR/playlist/$2.json $3 file:///$4
 fi
@@ -44,7 +43,6 @@ fi
 if [[ $1 = "add" ]]; then
   if [[ "$2" = "" ]] || [[ "$3" = "" ]]; then
     usage
-    exit
   fi
   if [ ! -f $PLAYLIST ];then
     echo could not find $PLAYLIST
