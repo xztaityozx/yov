@@ -1,0 +1,18 @@
+language: bash
+addons:
+  apt:
+    packages:
+      - python3-pip
+      - jq
+      - vlc
+before_install:
+  - pwd
+  - pip3 install --user youtube-dl
+  - mkdir ~/src
+  - git clone https://github.com/progrhyme/shove.git
+  - ./shove/bin/shove -V
+env:
+  global:
+    - YOV_VLC_OPTIONS=""
+script:
+  - ./shove/bin/shove test.t
