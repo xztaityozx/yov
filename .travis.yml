@@ -9,13 +9,11 @@ before_install:
   - pip3 install --user youtube-dl
   - mkdir ~/src
   - git clone https://github.com/progrhyme/shove.git
-  - ls ./
-  - alias shove="./shove/bin/shove"
-  - shove -V
+  - ./shove/bin/shove -V
 env:
   global:
     - YOV_VLC_OPTIONS=""
 install:
   - ./yov.sh init
 script:
-  - shove test.t
+  - ./shove/bin/shove test.t
