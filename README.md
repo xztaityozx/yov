@@ -20,7 +20,12 @@ yov/yov.sh init
 ```sh
 yov.sh add [playlist] [url]
 ```
-URLをplaylistに追加する。`youtube-dl`でタイトルを取得できるなら取得する。ローカルファイルは未対応
+URLをplaylistに追加する。`youtube-dl`でタイトルを取得できるなら取得する
+
+```sh
+yov.sh addlocal [playlist] [title] [uri]
+```
+ローカルとかにあるファイルを指定してプレイリストに追加できる。絶対パスを指定すること
 
 ```sh
 yov.sh play [playlist]
