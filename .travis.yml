@@ -1,8 +1,12 @@
 language: bash
+addons:
+  apt:
+    packages:
+      - python3-pip
+      - jq
 before_install:
   - pwd
-  - apt install -y python3-pip jq
-  - pip3 install youtube-dl
+  - pip3 install --user youtube-dl
   - mkdir ~/src
   - git clone https://github.com/progrhyme/shove.git ~/src/shove
   - alias shove="$HOME/src/shove/bin/shove"
