@@ -4,6 +4,7 @@ addons:
     packages:
       - python3-pip
       - jq
+      - vlc
 before_install:
   - pwd
   - pip3 install --user youtube-dl
@@ -13,7 +14,5 @@ before_install:
 env:
   global:
     - YOV_VLC_OPTIONS=""
-install:
-  - ./yov.sh init
 script:
   - ./shove/bin/shove test.t
