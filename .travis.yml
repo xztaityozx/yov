@@ -1,0 +1,16 @@
+language: bash
+before_install:
+  - cd ./yov
+  - apt install -y python3-pip jq
+  - pip3 install youtube-dl
+  - mkdir ~/src
+  - git clone https://github.com/progrhyme/shove.git ~/src/shove
+  - alias shove="$HOME/src/shove/bin/shove"
+  - shove -V
+env:
+  global:
+    - YOV_VLC_OPTIONS=""
+install:
+  - ./yov.sh init
+script:
+  - shove test.t
