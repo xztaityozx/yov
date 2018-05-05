@@ -1,6 +1,6 @@
 language: bash
 before_install:
-  - cd ./yov
+  - cd xztaityozx/yov
   - apt install -y python3-pip jq
   - pip3 install youtube-dl
   - mkdir ~/src
