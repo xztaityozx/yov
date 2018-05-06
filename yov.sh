@@ -17,6 +17,7 @@ __yov_addplaylist(){
   local playlist=$1
   local title=$2
   local uri=$3
+  [ "$playlist" = "" ] || [ "$title" = "" ] || [ "$uri" = "" ] && return 1
   [ -d /tmp/yov ] || mkdir /tmp/yov &&
     cat $playlist | jq ".list|= .+[{\"title\":\"$title\",\"stream\":\"$uri\"}]" > /tmp/yov/list.json &&
     cat /tmp/yov/list.json > $playlist
