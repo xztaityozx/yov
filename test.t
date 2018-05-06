@@ -25,4 +25,13 @@ t::group "unit add playlist" ({
   t_error "__yov_addplaylist a"
   t_error "__yov_addplaylist $DEFAULT_JSON"
   t_error "__yov_addplaylist $DEFAULT_JSON a"
+
+  t_error "yov add"
+  t_error "yov add a"
+  t_error "yov add d url"
+  URL='https://www.youtube.com/watch?v=4QFtAHfdTMU'
+  yov add default $URL
+  RES=$(cat $DEFAULT_JSON|jq -cr '.list[1].stream')
+  t_is $RES $URL
+  t_error "yov add default url"
 })

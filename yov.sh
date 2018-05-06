@@ -1,7 +1,6 @@
 #!/bin/bash
 
 CONFIG_DIR=$HOME/.config/yov
-PLAYLIST=${CONFIG_DIR}/playlist/$2.json
 
 __yov_usage(){
   echo "Usage"
@@ -24,6 +23,7 @@ __yov_addplaylist(){
 }
 
 yov(){
+  PLAYLIST=${CONFIG_DIR}/playlist/$2.json
   if [ "$1" = "--help" ] || [ $# -lt 1 ] || [ ! -w type jq &> /dev/null ] || [ ! -w type youtube-dl &> /dev/null ]; then
     __yov_usage
     return 1
@@ -51,7 +51,7 @@ yov(){
       echo could not find $PLAYLIST
       return
     fi
-    [ -d /tmp/yov] || mkdir /tmp/yov &&
+    [ -d /tmp/yov ] || mkdir /tmp/yov &&
       youtube-dl -J $3 > /tmp/yov/get.json &&
       title=$(cat /tmp/yov/get.json | jq -cr '.title') &&
       __yov_addplaylist $PLAYLIST $title $3
