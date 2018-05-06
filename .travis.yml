@@ -4,7 +4,6 @@ addons:
     packages:
       - python3-pip
       - jq
-      - vlc
 before_install:
   - pwd
   - pip3 install --user youtube-dl

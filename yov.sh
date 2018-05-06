@@ -54,7 +54,7 @@ yov(){
     [ -d /tmp/yov ] || mkdir /tmp/yov &&
       youtube-dl -J $3 > /tmp/yov/get.json &&
       title=$(cat /tmp/yov/get.json | jq -cr '.title') &&
-      __yov_addplaylist $PLAYLIST $title $3 || return 1
+      __yov_addplaylist $PLAYLIST "$title" $3 || return 1
     echo "done!"
     return
   fi
