@@ -15,4 +15,4 @@ env:
   global:
     - YOV_VLC_OPTIONS=""
 script:
-  - ./shove/bin/shove test.t
+  - ./shove/bin/shove test.t -v
