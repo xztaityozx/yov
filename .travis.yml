@@ -1,11 +1,9 @@
 language: bash
-dist: bionic
 addons:
   apt:
     packages:
       - python3-pip
       - jq
-      - peco
 before_install:
   - pwd
   - pip3 install --user youtube-dl
@@ -15,8 +13,12 @@ before_install:
   - git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
   - yes | ~/.fzf/install
   - . ~/.bashrc
+  - wget https://github.com/peco/peco/releases/download/v0.5.3/peco_linux_amd64.tar.gz
+  - tar xvf ./peco_linux_amd64.tar.gz
+  - cp ./peco_linux_amd64/peco ~/.local/bin
 env:
   global:
     - YOV_VLC_OPTIONS=""
+    - PATH=$PATH:$HOME/.local/bin
 script:
   - ./shove/bin/shove test.t -v
