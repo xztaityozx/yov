@@ -21,6 +21,16 @@ __yov_addplaylist(){
     cat $playlist | jq ".list|= .+[{\"title\":\"$title\",\"stream\":\"$uri\"}]" > /tmp/yov/list.json &&
     cat /tmp/yov/list.json > $playlist
 }
+__yov_listup(){
+  local playlist=$CONFIG_DIR/playlist/${1:-default}.json
+  cat $playlist | jq -cr '.list[]|.title,.stream' | awk 'NR%2==1{printf "[%d]\t"$0,NR/2}NR%2==0{print "\t"$0}'
+}
+
+__yov_choice(){
+  local choiced=$(__yov_listup $1|$YOV_FUZZY_FINDER $YOV_FUZZY_FINDER_OPTIONS)
+  [ "$choiced" = "" ] && return 1
+  echo $choiced | awk '{print $NF}'
+}
 
 yov(){
   PLAYLIST=${CONFIG_DIR}/playlist/$2.json
