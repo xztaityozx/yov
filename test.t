@@ -23,7 +23,7 @@ t::group "unit add playlist" ({
   yov init
   __yov_addplaylist $DEFAULT_JSON a b
   RES=$(cat $DEFAULT_JSON|jq -cr '.list[0]')
-  t_is $RES '{"title":"a","stream":"b"}'
+  t_is "$RES" '{"title":"a","stream":"b"}'
   t_error "__yov_addplaylist" 
   t_error "__yov_addplaylist a"
   t_error "__yov_addplaylist $DEFAULT_JSON"
@@ -33,10 +33,10 @@ t::group "unit add playlist" ({
   t_error "yov add a"
   t_error "yov add d url"
   
-  yov add default $URL
+  yov add default "$URL"
   cat $DEFAULT_JSON|jq -cr '.list[1]'
-  RES=$(cat $DEFAULT_JSON|jq -cr '.list[1].stream')
-  t_is $RES $URL
+  RES="$(cat $DEFAULT_JSON|jq -cr '.list[1].stream')"
+  t_is "$RES" "$URL"
   t_error "yov add default url"
 })
 
