@@ -13,6 +13,7 @@ source $SCRIPT_PATH/funcs.sh
 
 if [[ $1 = "addlocal" ]]; then
   ([ "$4" = "" ] || [ "$2" = "" ] || [ "$3" = "" ]) && __yov_usage && exit 1
+  [ ! -f $CONFIG_DIR/playlist/$2.json ] && echo could not find $2.json && exit 1
   __yov_addplaylist $CONFIG_DIR/playlist/$2.json $3 file:///$4 && exit
 fi
 

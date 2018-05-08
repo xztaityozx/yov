@@ -69,5 +69,4 @@ t::group "unit addlocal" ({
   t_is "$RES" "file:///stream2"
   RES="$(cat $DEFAULT_JSON|jq -rc '.list[1].title')"
   t_is "$RES" "title2"
-
 })
