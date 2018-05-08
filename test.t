@@ -4,7 +4,6 @@ t_ok 1
 
 DEFAULT_JSON=$HOME/.config/yov/playlist/default.json
 URL='https://www.youtube.com/watch?v=4QFtAHfdTMU'
-alias yov="./yov.sh"
 
 t::group "init" ({
   ./yov.sh init
@@ -20,7 +19,7 @@ t::group "help" ({
 })
 
 t::group "unit add playlist" ({
-  yov init
+ ./yov.sh init
   __yov_addplaylist $DEFAULT_JSON a b
   RES=$(cat $DEFAULT_JSON|jq -cr '.list[0]')
   t_is "$RES" '{"title":"a","stream":"b"}'
@@ -29,15 +28,15 @@ t::group "unit add playlist" ({
   t_error "__yov_addplaylist $DEFAULT_JSON"
   t_error "__yov_addplaylist $DEFAULT_JSON a"
 
-  t_error "yov add"
-  t_error "yov add a"
-  t_error "yov add d url"
+  t_error "./yov.sh add"
+  t_error "./yov.sh add a"
+  t_error "./yov.sh add d url"
   
-  yov add default "$URL"
+ ./yov.sh add default "$URL"
   cat $DEFAULT_JSON|jq -cr '.list[1]'
   RES="$(cat $DEFAULT_JSON|jq -cr '.list[1].stream')"
   t_is "$RES" "$URL"
-  t_error "yov add default url"
+  t_error "./yov.sh add default url"
 })
 
 t::group "unit listup" ({
@@ -46,7 +45,7 @@ t::group "unit listup" ({
   t_is $RES $URL
   export YOV_FUZZY_FINDER="fzf"
   export YOV_FUZZY_FINDER_OPTIONS="--select-1"
-  yov init
+ ./yov.sh init
   __yov_addplaylist $DEFAULT_JSON a b
   t_is "b" "$(__yov_choice)"
   export YOV_FUZZY_FINDER=peco
@@ -55,17 +54,17 @@ t::group "unit listup" ({
 
 t::group "unit addlocal" ({
   t_ok 1 "unit test [addlocal functions]"
-  t_error "yov addlocal"
-  t_error "yov addlocal a"
-  t_error "yov addlocal a b"
-  t_error "yov addlocal a b c"
-  yov init
-  yov addlocal default title stream
+  t_error "./yov.sh addlocal"
+  t_error "./yov.sh addlocal a"
+  t_error "./yov.sh addlocal a b"
+  t_error "./yov.sh addlocal a b c"
+ ./yov.sh init
+ ./yov.sh addlocal default title stream
   RES="$(cat $DEFAULT_JSON|jq -rc '.list[0].stream')"
   t_is "$RES" "file:///stream"
   RES="$(cat $DEFAULT_JSON|jq -rc '.list[0].title')"
   t_is "$RES" "title"
-  yov addlocal default title2 stream2
+ ./yov.sh addlocal default title2 stream2
   RES="$(cat $DEFAULT_JSON|jq -rc '.list[1].stream')"
   t_is "$RES" "file:///stream2"
   RES="$(cat $DEFAULT_JSON|jq -rc '.list[1].title')"
