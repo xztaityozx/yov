@@ -45,3 +45,21 @@ __yov_init(){
   mkdir -p $CONFIG_DIR/playlist &&
     echo '{"list":[],"name":"default"}' > $CONFIG_DIR/playlist/default.json
 }
+
+__yov_getYoutubePlaylist(){
+  local URL="$2"
+  local playlist="$1"
+
+  [ -d /tmp/yov ] || mkdir /tmp/yov &&
+  echo get youtube playlist... &&
+  youtube-dl -J --flat-playlist "$URL" > /tmp/yov/get.json &&
+  echo parse JSON... &&
+  cat /tmp/yov/get.json | jq -cr '.entries[]|.title,.id' | tee /tmp/yov/list.json &&
+  echo add to $playlist &&
+  cat /tmp/yov/list.json | 
+  awk 'NR%2==1{printf "{\"title\":\""$0"\","}NR%2==0{print "\"stream\":\"https://www.youtube.com/watch?v="$0"\"}"}' | 
+  tr '\n' ',' | sed 's/,$//' | awk 1 > /tmp/yov/querys &&
+  cat $playlist | jq ".list|= .+[$(cat /tmp/yov/querys)]" > /tmp/yov/list.json && 
+  cat /tmp/yov/list.json > $playlist &&
+  echo "done!"
+}
