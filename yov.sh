@@ -24,6 +24,11 @@ if [[ $1 = "add" ]]; then
   ([[ "$2" = "" ]] || [[ "$3" = "" ]]) && __yov_usage && exit 1
   [ ! -f $PLAYLIST ] && echo could not find $PLAYLIST && exit 1
 
+  if echo "$3" | grep -E "https://www.youtube.com/playlist\?list=.+" &> /dev/null; then
+    __yov_getYoutubePlaylist "$PLAYLIST" "$3"
+    exit
+  fi
+
   [ -d /tmp/yov ] || mkdir /tmp/yov &&
     youtube-dl -J $3 > /tmp/yov/get.json && echo "get json from internet" && 
     title="$(cat /tmp/yov/get.json | jq -cr '.title')" && echo "get title:$title($3)" && 

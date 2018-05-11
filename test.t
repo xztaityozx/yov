@@ -4,6 +4,7 @@ t_ok 1
 
 DEFAULT_JSON=$HOME/.config/yov/playlist/default.json
 URL='https://www.youtube.com/watch?v=4QFtAHfdTMU'
+URL2="https://www.youtube.com/playlist?list=PLwW8DzvLo_xk87YjL2AATM7Bdts1pV319"
 
 t::group "init" ({
   ./yov.sh init
@@ -32,11 +33,17 @@ t::group "unit add playlist" ({
   t_error "./yov.sh add a"
   t_error "./yov.sh add d url"
   
+  ./yov.sh init 
+  ./yov.sh add default "$URL2"
+  RES="$(cat $DEFAULT_JSON | jq -cr '.list[]|.stream' | sed -E 's/.+v=//g' | xargs)"
+  t_is "$RES" "SQo6qcH6t5I P4a6_ROoUcM"
+  
  ./yov.sh add default "$URL"
-  cat $DEFAULT_JSON|jq -cr '.list[1]'
-  RES="$(cat $DEFAULT_JSON|jq -cr '.list[1].stream')"
+  cat $DEFAULT_JSON|jq -cr '.list[2]'
+  RES="$(cat $DEFAULT_JSON|jq -cr '.list[2].stream')"
   t_is "$RES" "$URL"
   t_error "./yov.sh add default url"
+
 })
 
 t::group "unit listup" ({
@@ -70,3 +77,4 @@ t::group "unit addlocal" ({
   RES="$(cat $DEFAULT_JSON|jq -rc '.list[1].title')"
   t_is "$RES" "title2"
 })
+
