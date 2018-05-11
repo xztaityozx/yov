@@ -1,6 +1,8 @@
 # yov
 youtube on vlc
 
+[![Build Status](https://travis-ci.org/xztaityozx/yov.svg?branch=master)](https://travis-ci.org/xztaityozx/yov)
+
 Jsonで作ったプレイリストをコンソールからvlcに再生させるオレオレスクリプト
 
 ## install
